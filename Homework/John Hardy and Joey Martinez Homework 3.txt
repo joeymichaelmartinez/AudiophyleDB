@@ -1,0 +1,380 @@
+1. 
+query:
+show collections
+
+result:
+categories
+customers
+employee-territories
+employees
+northwind
+order-details
+orders
+products
+regions
+shippers
+suppliers
+
+2.
+query:
+db.categories.count()
+
+result:
+8
+
+3.
+query:
+db.orders.count()
+
+result:
+830
+
+4.
+query:
+db.orders.find({"EmployeeID" : 8} ).count()
+
+result:
+104
+
+5.
+query:
+db.employees.find({"EmployeeID" : 1},{"_id": false, "LastName": true })
+
+Result:
+{ "LastName" : "Davolio" }
+
+6.
+db.orders.distinct("EmployeeID", {"OrderID" : {$lt:10300}})
+
+result:
+[ 3, 4, 5, 9, 1, 8, 6, 2, 7 ]
+
+7. 
+query:
+db.suppliers.distinct("CompanyName")
+
+result:
+[
+        "Tokyo Traders",
+        "Cooperativa de Quesos 'Las Cabras'",
+        "Mayumi's",
+        "Pavlova",
+        "Specialty Biscuits",
+        "PB Knäckebröd AB",
+        "Refrescos Americanas LTDA",
+        "Heli Süßwaren GmbH & Co. KG",
+        "Plutzer Lebensmittelgroßmärkte AG",
+        "Nord-Ost-Fisch Handelsgesellschaft mbH",
+        "Formaggi Fortini s.r.l.",
+        "Norske Meierier",
+        "Bigfoot Breweries",
+        "Svensk Sjöföda AB",
+        "Aux joyeux ecclésiastiques",
+        "New England Seafood Cannery",
+        "Leka Trading",
+        "Lyngbysild",
+        "Exotic Liquids",
+        "New Orleans Cajun Delights",
+        "Grandma Kelly's Homestead",
+        "Zaanse Snoepfabriek",
+        "Karkki Oy",
+        "G'day",
+        "Ma Maison",
+        "Pasta Buttini s.r.l.",
+        "Escargots Nouveaux",
+        "Gai pâturage",
+        "Forêts d'érables"
+]
+
+8.
+query:
+db.suppliers.count()
+
+result:
+29
+
+9.
+query:
+ db.suppliers.find({"City":"Boston", "Region":"MA"}, {"SupplierID":true, "Phone":true, "_id":false})
+
+result:
+{ "SupplierID" : 19, "Phone" : "(617) 555-3267" }
+
+10.
+query:
+db.orders.aggregate([
+                     { $group: { _id: "$EmployeeID", total: { $sum: 1 } } },
+                     { $sort: { total: -1 }},
+                     { $limit: 1 }
+                   ])
+result:
+{ "_id" : 4, "total" : 156 }
+
+11.
+query:
+db.regions.find({"RegionID":2}).count()
+db.regions.find({"RegionID":2}, {"RegionDescription":true, "_id": false})
+
+result:
+1
+{ "RegionDescription" : "Western" }
+
+12.
+query:
+db.shippers.distinct("Phone", {"CompanyName":"United Package"})
+
+result:
+[ "(503) 555-3199" ]
+
+13.
+query:
+db['order-details'].count()
+db['employee-territories'].count()
+
+result:
+2155
+49
+
+14.
+query:
+ "ShipCity" : "Albuquerque", "ShipRegion" : "NM",
+db.orders.aggregate([
+                      { $match: { "ShipCity": "Albuquerque", "ShipRegion" : "NM" } },
+                      { $group: { _id: "$ShipCity", total: { $sum: 1 } } },
+                    ])
+
+db.orders.distinct("OrderID", {"ShipCity" : "Albuquerque", "ShipRegion": "NM"})
+
+result:
+{ "_id" : "Albuquerque", "total" : 18 }
+
+[
+        10262,
+        10272,
+        10294,
+        10314,
+        10316,
+        10346,
+        10401,
+        10479,
+        10564,
+        10569,
+        10598,
+        10761,
+        10820,
+        10852,
+        10889,
+        10988,
+        11000,
+        11077
+]
+
+1. What are the different collections in the Northwind database?
+query:
+MATCH (n) RETURN distinct labels(n)
+
+result:
+labels(n)
+["Category"]
+["Supplier"]
+["Customer"]
+["Employee"]
+["Regions"]
+["Employee_Territories"]
+["Order_Details"]
+["Order"]
+["Product"]
+["Shippers"]
+["Territories"]
+
+2. How many documents are in the "categories" label set?
+query:
+MATCH (n:Category) RETURN count(n)
+
+result:
+count(n)
+8
+
+3. How many documents are in the "orders" label set?
+query:
+MATCH (n:Order) RETURN count(n)
+
+result:
+count(n)
+830
+
+4. How many orders were handled by the person with EmployeeID number 8?
+query:
+MATCH (:Employee {employeeID: '8'})-[:SOLD]->(n:Order) RETURN count(n)
+
+result:
+count(n)
+104
+
+5. What is the last name of the employee who has the EmployeeID number 1?
+query:
+MATCH (e:Employee {employeeID: '1'}) RETURN e.lastName
+
+result:
+e.lastName
+"Davolio"
+
+6. What are the EmployeeID numbers on orders which have an OrderID less than 10300?
+query:
+MATCH (o:Order) <-[:SOLD]- (e:Employee) WHERE o.orderID < "10300" RETURN DISTINCT e.employeeID
+
+result:
+e.employeeID
+"5"
+"6"
+"4"
+"3"
+"9"
+"1"
+"8"
+"2"
+"7"
+
+7. What are the Company Names of the suppliers?
+query:
+MATCH (s:Supplier) RETURN DISTINCT s.companyName
+
+result:
+s.companyName
+"Mayumi's"
+"Karkki Oy"
+"Specialty Biscuits"
+"Leka Trading"
+"Lyngbysild"
+"G'day"
+"Nord-Ost-Fisch Handelsgesellschaft mbH"
+"Formaggi Fortini s.r.l."
+"Tokyo Traders"
+"PB Knäckebröd AB"
+"Pasta Buttini s.r.l."
+"Pavlova"
+"Zaanse Snoepfabriek"
+"Escargots Nouveaux"
+"Norske Meierier"
+"Bigfoot Breweries"
+"Aux joyeux ecclésiastiques"
+"Gai pâturage"
+"Cooperativa de Quesos 'Las Cabras'"
+"Plutzer Lebensmittelgroßmärkte AG"
+"Exotic Liquids"
+"Ma Maison"
+"Forêts d'érables"
+"Heli Süßwaren GmbH & Co. KG"
+"New Orleans Cajun Delights"
+"Svensk Sjöföda AB"
+"Refrescos Americanas LTDA"
+"New England Seafood Cannery"
+"Grandma Kelly's Homestead"
+
+8. How many suppliers are there?
+query:
+MATCH (s:Supplier) RETURN count(s)
+
+result:
+29
+
+9. What is the supplier ID and phone number for the supplier in Boston, Mass.?
+query:
+MATCH (s:Zupplierz {city: "Boston", region: "MA"}) RETURN s.supplierID, s.phone
+
+result:
+s.supplierID	s.phone
+"19"		"(617) 555-3267"
+
+10. What employee is responsible for the largest number of orders, and for how many orders is that employee responsible?
+query:
+MATCH (e:Employee) -[s:SOLD]-> (o:Order) return e.employeeID, count(s) as n order by n desc limit 1
+
+result:
+e.employeeID	   n
+"4"	           156
+
+11. How many territories have the RegionID value of "2"?  What are their territory descriptions? You can use two queries.  Be sure to ONLY show the territory descriptions for that query.
+query:
+MATCH (t:Territories) -[:BELONGS_TO]-> (r:Regions) WHERE r.RegionID = "2" RETURN count(t)
+
+result:
+count(n)
+15
+
+query:
+MATCH (t:Territories) -[:BELONGS_TO]-> (r:Regions) WHERE r.RegionID = "2" RETURN t.TerritoryDescription
+
+result:
+t.TerritoryDescription
+"HoffmanEstates"
+"Chicago"
+"Denver"
+"ColoradoSprings"
+"Phoenix"
+"Scottsdale"
+"SantaMonica"
+"MenloPark"
+"Campbell"
+"SanFrancisco"
+"SantaCruz"
+"SantaClara"
+"Redmond"
+"Bellevue"
+"Seattle"
+
+12. What is the phone number of the shipper with the company name "United Package"? Be sure to ONLY include the phone number in the result.
+query:
+MATCH (s:Shippers) WHERE s.CompanyName = "United Package" RETURN s.Phone
+
+result:
+s.Phone
+"(503) 555-3199"
+
+BONUS:
+13. How many relationships are in the "order-details" edges set?  How many in the "employee-territories" edges set?
+query:
+MATCH (od:Order_Details) RETURN count(od)
+
+result:
+count(od)
+2155
+
+query:
+MATCH (et:Employee_Territories) RETURN count(et)
+
+result:
+count(et)
+49
+
+14. How many orders were shipped to Albuquerque, NM?  What are the order numbers?
+query:
+MATCH (n:Orderz) WHERE n.shipCity = "Albuquerque" and n.shipRegion = "NM" RETURN count(n)
+
+result:
+count(n)
+18
+
+query:
+MATCH (n:Orderz) WHERE n.shipCity = "Albuquerque" and n.shipRegion = "NM" RETURN n.orderID
+
+result:
+n.orderID
+"10262"
+"10272"
+"10294"
+"10314"
+"10316"
+"10346"
+"10401"
+"10479"
+"10564"
+"10569"
+"10598"
+"10761"
+"10820"
+"10852"
+"10889"
+"10988"
+"11000"
+"11077"
