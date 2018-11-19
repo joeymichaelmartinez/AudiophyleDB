@@ -8,20 +8,20 @@ Genre
 Album
     ID: 1 (PK)
     name: "Odyssey"
-    cover art: odyssey-cover-art.png
+    cover art: odyssey.png
     publisher: "Electronic Gems"
     publish date: 1-1-18 (date data-type)
-    Genre ID: 0 (FK)
-    Song ID: 3 (FK)
-    Group ID: 2 (FK)
+    Genre IDs: [0] (FK)
+    Song IDs: [3, 4] (FKs)
+    Group IDs: [2] (FK)
 
 Group
     ID: 2 (PK)
     name: "Home"
     number members: 1
-    Genre ID: 0 (FK)
-    Album ID: 1 (FK)
-    Song ID: 3 (FK)
+    Genre IDs: [0] (FK)
+    Album IDs: [1] (FK)
+    Song IDs: [3] (FK)
 
 Song
     ID: 3 (PK)
@@ -29,3 +29,15 @@ Song
     explicit?: false
     length: 213
     file: Resonance.mp3
+
+Song
+    ID: 4 (PK)
+    name: "Odyssey"
+    explicit?: false
+    length: 370
+    file: Odyssey.mp3
+
+Song
+    ID: 5 (PK)
+    name: "Intro"
+    explicit?:
