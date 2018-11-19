@@ -1,0 +1,31 @@
+Genre
+    ID: 0 (PK)
+    name: "Electronic"
+    related genres: "Electronic Dance Music", "Dubstep"
+    Album ID: 1 (FK)
+    Group ID: 2 (FK)
+
+Album
+    ID: 1 (PK)
+    name: "Odyssey"
+    cover art: odyssey-cover-art.png
+    publisher: "Electronic Gems"
+    publish date: 1-1-18 (date data-type)
+    Genre ID: 0 (FK)
+    Song ID: 3 (FK)
+    Group ID: 2 (FK)
+
+Group
+    ID: 2 (PK)
+    name: "Home"
+    number members: 1
+    Genre ID: 0 (FK)
+    Album ID: 1 (FK)
+    Song ID: 3 (FK)
+
+Song
+    ID: 3 (PK)
+    name: "Resonance"
+    explicit?: false
+    length: 213
+    file: Resonance.mp3
