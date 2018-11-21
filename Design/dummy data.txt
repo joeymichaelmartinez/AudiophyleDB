@@ -1,0 +1,80 @@
+Genre
+    ID: 1 (PK)
+    name: "Electronic"
+
+Genre
+    ID: 2 (PK)
+    name: "Electronic Dance Music"
+
+Related Genres
+    genre1: 1 (FK)
+    genre2: 2 (FK)
+
+Genre-Album
+    genre ID: 1 (FK)
+    album ID: 1 (FK)
+
+Album
+    ID: 1 (PK)
+    name: "Odyssey"
+    cover art: odyssey.png
+    publisher: "Electronic Gems"
+    publish date: 1-1-18 (date data-type)
+
+Genre-Group
+    genre ID: 1 (FK)
+    group ID: 1 (FK)
+
+Group
+    ID: 1 (PK)
+    name: "Home"
+    number members: 1
+
+Album-Group
+    album ID: 1 (FK)
+    group ID: 1 (FK)
+
+Album-Song
+    album ID: 1 (FK)
+    song ID: 1 (FK)
+
+Group-Song
+    group ID: 1 (FK)
+    song ID: 1 (FK)
+
+Song
+    ID: 1 (PK)
+    name: "Resonance"
+    explicit?: false
+    length: 213
+    file: Resonance.mp3
+
+Album-Song
+    album ID: 1 (FK)
+    song ID: 2 (FK)
+
+Group-Song
+    group ID: 1 (FK)
+    song ID: 2 (FK)
+
+Song
+    ID: 2 (PK)
+    name: "Odyssey"
+    explicit?: false
+    length: 370
+    file: Odyssey.mp3
+
+Album-Song
+    album ID: 1 (FK)
+    song ID: 3 (FK)
+
+Group-Song
+    group ID: 1 (FK)
+    song ID: 3 (FK)
+
+Song
+    ID: 3 (PK)
+    name: "Intro"
+    explicit?: false
+    length: 189
+    file: Intro.mp3
