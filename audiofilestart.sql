@@ -10,9 +10,54 @@ CREATE DATABASE /*!32312 IF NOT EXISTS*/`audiofile` /*!40100 DEFAULT CHARACTER S
 
 USE `audiofile`;
 
-DROP TABLE IF EXISTS `genre`;
+DROP TABLE IF EXISTS `Album`;
 
-CREATE TABLE `genre` (
+CREATE TABLE `Album` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) NOT NULL,
+  `cover art` BLOB NOT NULL,
+  `publisher` varchar(50) NOT NULL,
+  `publish date` DATE NOT NULL,
+  
+  PRIMARY KEY (`ID`)
+  
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `Album-Group`;
+
+CREATE TABLE `Album-Group` (
+  `album ID` int(11) NOT NULL,
+  `group ID` int(11) NOT NULL,
+  
+  FOREIGN KEY (`album ID`)
+      REFERENCES `Album`(`ID`)
+      ON UPDATE CASCADE ON DELETE CASCADE,
+
+  FOREIGN KEY (`group ID`)
+      REFERENCES `Group`(`ID`)
+      ON UPDATE CASCADE ON DELETE CASCADE
+  
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `Album-Song`;
+
+CREATE TABLE `Album-Song` (
+  `album ID` int(11) NOT NULL,
+  `song ID` int(11) NOT NULL,
+  
+  FOREIGN KEY (`album ID`)
+      REFERENCES `Album`(`ID`)
+      ON UPDATE CASCADE ON DELETE CASCADE,
+
+  FOREIGN KEY (`song ID`)
+      REFERENCES `Song`(`ID`)
+      ON UPDATE CASCADE ON DELETE CASCADE
+  
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `Genre`;
+
+CREATE TABLE `Genre` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL,
   
@@ -20,58 +65,90 @@ CREATE TABLE `genre` (
   
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-DROP TABLE IF EXISTS `album`;
+DROP TABLE IF EXISTS `Genre-Album`;
 
-CREATE TABLE `album` (
-  `albumId` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(50) NOT NULL,
-  `coverArt` BLOB NOT NULL,
-  `publisher` varchar(50) NOT NULL,
-  `publishDate` DATE NOT NULL,
-  `genreIds` int(11) NOT NULL,
-  `songIds` int(11) NOT NULL,
-  `groupIds` int(11) NOT NULL,
-  
-  PRIMARY KEY (`genreId`),
-  
-  FOREIGN KEY (`genreIds`)
-      REFERENCES genre(`ID`)
-      ON UPDATE CASCADE ON DELETE CASCADE,
+CREATE TABLE `Genre-Album` (
+  `genre ID` int(11) NOT NULL,
+  `album ID` int(11) NOT NULL,
 
-  FOREIGN KEY (`songIds`)
-      REFERENCES song(`songId`)
+  FOREIGN KEY (`genre ID`)
+      REFERENCES `Genre`(`ID`)
       ON UPDATE CASCADE ON DELETE CASCADE,
-      
-  FOREIGN KEY (`groupIds`)
-      REFERENCES `group`(`groupId`)
+  
+  FOREIGN KEY (`album ID`)
+      REFERENCES `Album`(`ID`)
       ON UPDATE CASCADE ON DELETE CASCADE
+  
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-DROP TABLE IF EXISTS `group`;
+DROP TABLE IF EXISTS `Genre-Group`;
 
-CREATE TABLE `group` (
-  `groupId` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `Genre-Group` (
+  `genre ID` int(11) NOT NULL,
+  `group ID` int(11) NOT NULL,
+
+  FOREIGN KEY (`genre ID`)
+      REFERENCES `Genre`(`ID`)
+      ON UPDATE CASCADE ON DELETE CASCADE,
+  
+  FOREIGN KEY (`group ID`)
+      REFERENCES `Group`(`ID`)
+      ON UPDATE CASCADE ON DELETE CASCADE
+  
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `Group`;
+
+CREATE TABLE `Group` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL,
   `numberOfMembers` int(11) NOT NULL,
-  `publishDate` DATE NOT NULL,
-  `genreIds` int(11) NOT NULL,
-  `albumIds` int(11) NOT NULL,
-  `songIds` int(11) NOT NULL,
   
+  PRIMARY KEY (`ID`)
   
-  PRIMARY KEY (`groupId`),
+  ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `Group-Song`;
+
+CREATE TABLE `Group-Song` (
+  `group ID` int(11) NOT NULL,
+  `song ID` int(11) NOT NULL,
   
-  FOREIGN KEY (`genreIds`)
-      REFERENCES `genre`(`genreId`)
+  FOREIGN KEY (`group ID`)
+      REFERENCES `Group`(`ID`)
       ON UPDATE CASCADE ON DELETE CASCADE,
 
-  FOREIGN KEY (`albumIds`)
-      REFERENCES album(`albumId`)
-      ON UPDATE CASCADE ON DELETE CASCADE,
-  
-  FOREIGN KEY (`songIds`)
-      REFERENCES song(`songId`)
+  FOREIGN KEY (`song ID`)
+      REFERENCES `Song`(`ID`)
       ON UPDATE CASCADE ON DELETE CASCADE
-      
   
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `Related Genres`;
+
+CREATE TABLE `Related Genres` (
+  `genre1` int(11) NOT NULL,
+  `genre2` int(11) NOT NULL,
+  
+  FOREIGN KEY (`genre1`)
+      REFERENCES `Genre`(`ID`)
+      ON UPDATE CASCADE ON DELETE CASCADE,
+
+  FOREIGN KEY (`genre2`)
+      REFERENCES `Genre`(`ID`)
+      ON UPDATE CASCADE ON DELETE CASCADE
+  
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `Song`;
+
+CREATE TABLE `Group` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) NOT NULL,
+  `explicit?` boolean,
+  `file` blob,
+  
+  PRIMARY KEY (`ID`)
+  
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  
