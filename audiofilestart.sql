@@ -142,7 +142,7 @@ CREATE TABLE `Related Genres` (
 
 DROP TABLE IF EXISTS `Song`;
 
-CREATE TABLE `Group` (
+CREATE TABLE `Song` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL,
   `explicit?` boolean,
