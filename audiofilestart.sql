@@ -62,13 +62,13 @@ DROP TABLE IF EXISTS Genre;
 
 CREATE TABLE Genre (
   id int(11) NOT NULL AUTO_INCREMENT,
-  name varchar(50) NOT NULL,
+  genre_name varchar(50) NOT NULL,
   
   PRIMARY KEY (id)
   
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-insert  into Genre(id,name) values
+insert  into Genre(id, genre_name) values
 (1,'Electronic'),
 (2,'Electronic Dance Music');
 
