@@ -16,7 +16,8 @@ CREATE TABLE album (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 insert  into album(id, album_name, cover_art, publisher, publish_date) values
-(1,'Odyssey','odyssey.png','Electronic Gems','1-1-2018');
+(1,'Odyssey','odyssey.png','Electronic Gems','1-1-2018'),
+(2,'Crack the Skye', 'Crack_the_Skye.png', 'Reprise', '3-24-2009');
 
 DROP TABLE IF EXISTS album_band;
 
@@ -35,7 +36,8 @@ CREATE TABLE album_band (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 insert  into album_band(album_id,band_id) values
-(1,1);
+(1,1),
+(2,2);
 
 DROP TABLE IF EXISTS album_song;
 
@@ -56,7 +58,14 @@ CREATE TABLE album_song (
 insert  into album_song(album_id,song_id) values
 (1,1),
 (1,2),
-(1,3);
+(1,3),
+(2,13),
+(2,14),
+(2,15),
+(2,16),
+(2,17),
+(2,18),
+(2,19);
 
 DROP TABLE IF EXISTS Genre;
 
@@ -70,7 +79,8 @@ CREATE TABLE Genre (
 
 insert  into Genre(id, genre_name) values
 (1,'Electronic'),
-(2,'Electronic Dance Music');
+(2,'Electronic Dance Music'),
+(3,'Progressive Metal');
 
 DROP TABLE IF EXISTS genre_album;
 
@@ -89,7 +99,8 @@ CREATE TABLE genre_album (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 insert  into genre_album(genre_id,album_id) values
-(1,1);
+(1,1),
+(3,2);
 
 DROP TABLE IF EXISTS genre_band;
 
@@ -108,7 +119,8 @@ CREATE TABLE genre_band (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 insert  into genre_band(genre_id, band_id) values
-(1,1);
+(1,1),
+(3,2);
 
 DROP TABLE IF EXISTS band;
 
@@ -122,7 +134,8 @@ CREATE TABLE band (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 insert  into band(id, band_name, number_members) values
-(1,'Home',1);
+(1,'Home',1),
+(2,'Mastodon', 4);
 
 DROP TABLE IF EXISTS band_song;
 
@@ -143,7 +156,14 @@ CREATE TABLE band_song (
 insert  into band_song(band_id, song_id) values
 (1,1),
 (1,2),
-(1,3);
+(1,3),
+(2,13),
+(2,14),
+(2,15),
+(2,16),
+(2,17),
+(2,18),
+(2,19);
 
 DROP TABLE IF EXISTS related_genres;
 
@@ -180,4 +200,11 @@ CREATE TABLE song (
 insert  into song(id, song_name, is_explicit, length, song_file) values
 (1,'Resonance',false,213,'Resonance.mp3'),
 (2,'Odyssey',false,370,'Oddyssey.mp3'),
-(3,'Intro',false,189,'Intro.mp3');
+(3,'Intro',false,189,'Intro.mp3'),
+(13,'Oblivion',false,347,'Oblivion.mp3'),
+(14,'Divinations',false,219,'Divinations.mp3'),
+(15,'Quintessence',false,327,'Quintessence.mp3'),
+(16,'The Czar: Usurper/Escape/Martyr/Spiral',false,654,'The Czar: Usurper/Escape/Martyr/Spiral.mp3'),
+(17,'Ghost of Karelia',false,325,'Ghost of Karelia.mp3'),
+(18,'Crack the Skye',false,354,'Crack the Skye.mp3'),
+(19,'The Last Baron',false,781,'The Last Baron.mp3');
