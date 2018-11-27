@@ -119,7 +119,7 @@ CREATE TABLE band (
   
   PRIMARY KEY (id)
   
-  ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 insert  into band(id, band_name, number_members) values
 (1,'Home',1);
@@ -148,20 +148,20 @@ insert  into band_song(band_id, song_id) values
 DROP TABLE IF EXISTS related_genres;
 
 CREATE TABLE related_genres (
-  genre1 int(11) NOT NULL,
-  genre2 int(11) NOT NULL,
+  genre1_id int(11) NOT NULL,
+  genre2_id int(11) NOT NULL,
   
-  FOREIGN KEY (genre1)
+  FOREIGN KEY (genre1_id)
       REFERENCES Genre(id)
       ON UPDATE CASCADE ON DELETE CASCADE,
 
-  FOREIGN KEY (genre2)
+  FOREIGN KEY (genre2_id)
       REFERENCES Genre(id)
       ON UPDATE CASCADE ON DELETE CASCADE
   
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-insert  into related_genres(genre1, genre2) values
+insert  into related_genres(genre1_id, genre2_id) values
 (1,2);
 
 DROP TABLE IF EXISTS song;
