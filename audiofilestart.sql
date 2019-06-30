@@ -2,7 +2,7 @@ CREATE DATABASE /*!32312 IF NOT EXISTS*/audiofile /*!40100 DEFAULT CHARACTER SET
 
 USE audiofile;
 
-DROP TABLE IF EXISTS album;
+SET FOREIGN_KEY_CHECKS=0; DROP TABLE album; SET FOREIGN_KEY_CHECKS=1;
 
 CREATE TABLE album (
   id int(11) NOT NULL AUTO_INCREMENT,
@@ -19,7 +19,7 @@ insert  into album(id, album_name, cover_art, publisher, publish_date) values
 (1,'Odyssey','odyssey.png','Electronic Gems','1-1-2018'),
 (2,'Crack the Skye', 'Crack_the_Skye.png', 'Reprise', '3-24-2009');
 
-DROP TABLE IF EXISTS song;
+SET FOREIGN_KEY_CHECKS=0; DROP TABLE IF EXISTS song; SET FOREIGN_KEY_CHECKS=1; 
 
 CREATE TABLE song (
   id int(11) NOT NULL AUTO_INCREMENT,
@@ -53,7 +53,7 @@ insert  into song(id, song_name, is_explicit, length, song_file) values
 (18,'Crack the Skye',false,354,'Crack_the_Skye.mp3'),
 (19,'The Last Baron',false,781,'The_Last_Baron.mp3');
 
-DROP TABLE IF EXISTS Genre;
+SET FOREIGN_KEY_CHECKS=0; DROP TABLE IF EXISTS Genre; SET FOREIGN_KEY_CHECKS=1;
 
 CREATE TABLE Genre (
   id int(11) NOT NULL AUTO_INCREMENT,
@@ -68,7 +68,7 @@ insert  into Genre(id, genre_name) values
 (2,'Electronic Dance Music'),
 (3,'Progressive Metal');
 
-DROP TABLE IF EXISTS band;
+SET FOREIGN_KEY_CHECKS=0; DROP TABLE IF EXISTS band; SET FOREIGN_KEY_CHECKS=1;
 
 CREATE TABLE band (
   id int(11) NOT NULL AUTO_INCREMENT,
@@ -83,7 +83,7 @@ insert  into band(id, band_name, number_members) values
 (1,'Home',1),
 (2,'Mastodon', 4);
 
-DROP TABLE IF EXISTS album_band;
+SET FOREIGN_KEY_CHECKS=0; DROP TABLE IF EXISTS album_band; SET FOREIGN_KEY_CHECKS=1;
 
 CREATE TABLE album_band (
   album_id int(11) NOT NULL,
@@ -103,7 +103,7 @@ insert  into album_band(album_id,band_id) values
 (1,1),
 (2,2);
 
-DROP TABLE IF EXISTS album_song;
+SET FOREIGN_KEY_CHECKS=0; DROP TABLE IF EXISTS album_song; SET FOREIGN_KEY_CHECKS=1;
 
 CREATE TABLE album_song (
   album_id int(11) NOT NULL,
@@ -140,7 +140,7 @@ insert  into album_song(album_id,song_id) values
 (2,18),
 (2,19);
 
-DROP TABLE IF EXISTS genre_album;
+SET FOREIGN_KEY_CHECKS=0; DROP TABLE IF EXISTS genre_album; SET FOREIGN_KEY_CHECKS=1;
 
 CREATE TABLE genre_album (
   genre_id int(11) NOT NULL,
@@ -160,7 +160,7 @@ insert  into genre_album(genre_id,album_id) values
 (1,1),
 (3,2);
 
-DROP TABLE IF EXISTS genre_band;
+SET FOREIGN_KEY_CHECKS=0; DROP TABLE IF EXISTS genre_band; SET FOREIGN_KEY_CHECKS=1;
 
 CREATE TABLE genre_band (
   genre_id int(11) NOT NULL,
@@ -180,7 +180,7 @@ insert  into genre_band(genre_id, band_id) values
 (1,1),
 (3,2);
 
-DROP TABLE IF EXISTS band_song;
+SET FOREIGN_KEY_CHECKS=0; DROP TABLE IF EXISTS band_song; SET FOREIGN_KEY_CHECKS=1;
 
 CREATE TABLE band_song (
   band_id int(11) NOT NULL,
@@ -217,7 +217,7 @@ insert  into band_song(band_id, song_id) values
 (2,18),
 (2,19);
 
-DROP TABLE IF EXISTS related_genres;
+SET FOREIGN_KEY_CHECKS=0; DROP TABLE IF EXISTS related_genres; SET FOREIGN_KEY_CHECKS=1;
 
 CREATE TABLE related_genres (
   genre1_id int(11) NOT NULL,
